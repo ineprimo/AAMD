@@ -125,9 +125,20 @@ def test_gradient_descent_multi(x_train, y_train):
       print("\033[92mAll tests passed!")
 
 
+
+
+### ---------------------- EJERCICIO 1 ----------------
+
+
 #First Part, Linear Regression
 print("First Part, Linear Regression")
 #TO-DO the main program.
+
+data = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\games_data.csv')
+
+#limpia los datos
+cleanData(data)
+
 #test_cost_one(x_train, y_train)
 #test_gradient_one(x_train, y_train)
 #test_gradient_descent_one(x_train, y_train,w,b)

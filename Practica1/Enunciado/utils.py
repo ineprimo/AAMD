@@ -3,11 +3,15 @@ import pandas as pd
 
 
 def cleanData(data):
+
     data["score"] = data["score"].apply(lambda x:  str(x).replace(",","."))
     data = data.drop(data[data["user score"] == "tbd"].index)
     data["user score"] = data["user score"].apply(lambda x:  str(x).replace(",","."))
     data["score"] = data["score"].astype(np.float64)
-    data["user score"] = data["user score"].astype(np.float64)
+    data["user score"] = data["user score"].astype(np.float64)*10
+
+    print("lkfvkhñlwe´jjjjjjjngkjfenehfeefef")
+
     return data
 
 def cleanDataMulti(data):
@@ -37,13 +41,23 @@ def zscore_normalize_features(X):
       mu (ndarray (n,))     : mean of each feature
       sigma (ndarray (n,))  : standard deviation of each feature
     """
+
+    # normaliza el array
+    X_norm = (X - X.min()) / (X.max() - X.min())
+
+    # media de cada columna
+    mu = np.ndarray(shape=(X))
+
+    # desviacion de cada columna
+    sigma = np.ndarray()
+
     # find the mean of each column/feature
     # mu will have shape (n,)
     # find the standard deviation of each column/feature
     # sigma will have shape (n,)
     # element-wise, subtract mu for that column from each example,
     # divide by std for that column
-    return 0, 0, 0
+    return X_norm, mu, sigma
 
 def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
     data = pd.read_csv(path)

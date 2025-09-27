@@ -9,9 +9,6 @@ def cleanData(data):
     data["user score"] = data["user score"].apply(lambda x:  str(x).replace(",","."))
     data["score"] = data["score"].astype(np.float64)
     data["user score"] = data["user score"].astype(np.float64)*10
-
-    print("lkfvkhñlwe´jjjjjjjngkjfenehfeefef")
-
     return data
 
 def cleanDataMulti(data):

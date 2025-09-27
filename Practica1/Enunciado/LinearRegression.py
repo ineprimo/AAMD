@@ -13,7 +13,10 @@ class LinearReg:
     """
     def __init__(self, x, y,w,b):
         #(scalar): Parameters of the model
-        return #delete this return
+        self.x = x  # ndarray   -> input of the model
+        self.y = y  # ndarray   -> real values
+        self.w = w  # escalar   -> parameter w
+        self.b = b  # escalar   -> parameter b
 
     """
     Computes the linear regression function.
@@ -36,7 +39,11 @@ class LinearReg:
                to fit the data points in x and y
     """
     def compute_cost(self):
-        return 0
+        # DUDA!!!! la media de la formula es de los datos reales? yo supongo que si
+        # pero no lo tengo muy claro
+        sumatorio = np.sum(np.square(self.y - self.x))
+        cost = (1/(np.len(self.y)))*sumatorio
+        return cost
     
 
     """
@@ -48,7 +55,19 @@ class LinearReg:
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
     def compute_gradient(self):
-        return 0, 0
+
+        # DUDA !!! qie coojones es el [x sub i] que hay en el enunciado??? porque
+        # entiendo que [y sub i] es la prediccion e [y sub i prima] es el valor real,
+        # que se traduce en x e y en esta clase, pero entonces que es [x sub i] ¿?
+
+        # FALTA EL *Xi
+        #gradientw = (np.sum(self.x -self.y))/np.mean(self.y)
+        #gradientb = (np.sum(self.x -self.y))/np.mean(self.y)
+
+        # hay un metodo en numpy lmao
+        gradientw = np.gradient(self.x, self.w)
+        gradientb = np.gradient(self.x, self.b)
+        return gradientw, gradientb
     
     
     """
@@ -75,6 +94,15 @@ class LinearReg:
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
+        
+        for i in num_iters:
+            # el gradient descent se calcula con el gradiente del metodo de arriba
+            self.w = w_initial - (alpha*self.compute_gradient())
+            self.b = b_initial - (alpha*self.compute_gradient())
+
+            # j_history guarda los costes por gradiente en cada iteracion
+            J_history[i] = self.compute_cost()
+
         return self.w, self.b, J_history, w_initial, b_initial
 
 

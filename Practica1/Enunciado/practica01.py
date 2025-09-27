@@ -134,10 +134,11 @@ def test_gradient_descent_multi(x_train, y_train):
 print("First Part, Linear Regression")
 #TO-DO the main program.
 
-data = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\games_data.csv')
+y_train = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\games_data.csv')
+x_train = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\ex1data1.txt')
 
 #limpia los datos
-cleanData(data)
+cleanData(y_train)
 
 #test_cost_one(x_train, y_train)
 #test_gradient_one(x_train, y_train)

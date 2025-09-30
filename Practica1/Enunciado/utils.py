@@ -26,6 +26,8 @@ def load_data_csv(path,x_colum,y_colum):
 
 
 
+
+
 def zscore_normalize_features(X):
     """
     computes  X, zcore normalized by column

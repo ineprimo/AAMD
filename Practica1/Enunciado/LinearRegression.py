@@ -41,10 +41,12 @@ class LinearReg:
     def compute_cost(self):
         # DUDA!!!! la media de la formula es de los datos reales? yo supongo que si
         # pero no lo tengo muy claro
-        aux = self.y - self.x
-        aaaa = np.square(aux)
-        sumatorio = np.sum(aaaa)
-        cost = (1/np.size(self.y))*sumatorio
+        aux = self.x - self.y
+        s = np.square(aux)
+        sumatorio = np.sum(s)
+        cost = (1/np.mean(self.y))*sumatorio
+
+
         return cost
     
 

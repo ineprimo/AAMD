@@ -67,13 +67,15 @@ class LinearReg:
         # entiendo que [y sub i] es la prediccion e [y sub i prima] es el valor real,
         # que se traduce en x e y en esta clase, pero entonces que es [x sub i] ¿?
 
+        y_prima = self.f_w_b(self.x)
+
         # FALTA EL *Xi
-        #gradientw = (np.sum(self.x -self.y))/np.mean(self.y)
-        #gradientb = (np.sum(self.x -self.y))/np.mean(self.y)
+        gradientw = (np.sum((y_prima - self.y)*self.x))/np.size(self.y)
+        gradientb = (np.sum(y_prima -self.y))/np.size(self.y)
         
         # hay un metodo en numpy lmao
-        gradientw = np.gradient(self.x, self.w)
-        gradientb = np.gradient(self.x, self.b)
+        #gradientw = np.gradient(self.x, self.w)
+        #gradientb = np.gradient(self.x, self.b)
         return gradientw, gradientb
     
     

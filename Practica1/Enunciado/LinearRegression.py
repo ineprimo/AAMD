@@ -11,7 +11,7 @@ class LinearReg:
         y (ndarray): Shape (m,) the real values of the prediction
         w, b (scalar): Parameters of the model
     """
-    def __init__(self, x, y,w,b):
+    def __init__(self, x, y, w, b):
         #(scalar): Parameters of the model
         self.x = x  # ndarray   -> input of the model
         self.y = y  # ndarray   -> real values
@@ -39,13 +39,15 @@ class LinearReg:
                to fit the data points in x and y
     """
     def compute_cost(self):
+        
+        y_prima = self.f_w_b(self.x)
+
         # DUDA!!!! la media de la formula es de los datos reales? yo supongo que si
         # pero no lo tengo muy claro
-        aux = self.x - self.y
+        aux = self.y - y_prima
         s = np.square(aux)
         sumatorio = np.sum(s)
-        cost = (1/np.mean(self.y))*sumatorio
-
+        cost = sumatorio/(np.size(self.y)*2)
 
         return cost
     
@@ -67,7 +69,7 @@ class LinearReg:
         # FALTA EL *Xi
         #gradientw = (np.sum(self.x -self.y))/np.mean(self.y)
         #gradientb = (np.sum(self.x -self.y))/np.mean(self.y)
-
+        
         # hay un metodo en numpy lmao
         gradientw = np.gradient(self.x, self.w)
         gradientb = np.gradient(self.x, self.b)

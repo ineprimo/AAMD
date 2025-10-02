@@ -37,8 +37,6 @@ def test_cost_one(x_train, y_train):
 
       initial_w = 2
       initial_b = 1
-
-
       lr = LinearReg(x_train,y_train,initial_w,initial_b)
       lrcost = lr.compute_cost()
       print(type(lrcost))
@@ -134,8 +132,8 @@ def test_gradient_descent_multi(x_train, y_train):
 print("First Part, Linear Regression")
 #TO-DO the main program.
 
-y_train = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\games_data.csv')
-x_train = pd.read_csv('C:\GITHUB\AAMD\Practica1\Enunciado\ex1data1.txt')
+y_train = pd.read_csv('games_data.csv')
+#x_train = pd.read_csv('ex1data1.txt')
 
 #limpia los datos
 cleanData(y_train)

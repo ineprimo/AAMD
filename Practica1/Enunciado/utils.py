@@ -7,8 +7,8 @@ def cleanData(data):
     data["score"] = data["score"].apply(lambda x:  str(x).replace(",","."))
     data = data.drop(data[data["user score"] == "tbd"].index)
     data["user score"] = data["user score"].apply(lambda x:  str(x).replace(",","."))
-    data["score"] = data["score"].astype(np.float64)
-    data["user score"] = data["user score"].astype(np.float64)*10
+    data["score"] = data["score"].astype(np.float64)/10
+    data["user score"] = data["user score"].astype(np.float64)
     return data
 
 def cleanDataMulti(data):

@@ -33,11 +33,33 @@ class LinearRegMulti(LinearReg):
         # para optimizar
         cost = super().compute_cost()
 
-        
-
-
         return cost
     
+
+    def compute_gradient(self):
+
+        # DUDA !!! qie coojones es el [x sub i] que hay en el enunciado??? porque
+        # entiendo que [y sub i] es la prediccion e [y sub i prima] es el valor real,
+        # que se traduce en x e y en esta clase, pero entonces que es [x sub i] ¿?
+
+        gradientw, gradientb = super().compute_gradient()
+        
+        # hay un metodo en numpy lmao
+        #gradientw = np.gradient(self.x, self.w)
+        #gradientb = np.gradient(self.x, self.b)
+        return gradientw, gradientb
+    
+    
+    def gradient_descent(self, alpha, num_iters):
+        # An array to store cost J and w's at each iteration — primarily for graphing later
+        J_history = []
+        w_history = []
+        w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
+        b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
+       
+        super().gradient_descent(alpha, num_iters)
+
+        return self.w, self.b, J_history, w_initial, b_initial
 
     
     """

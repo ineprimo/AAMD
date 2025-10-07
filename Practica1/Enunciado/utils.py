@@ -42,13 +42,17 @@ def zscore_normalize_features(X):
     """
 
     # normaliza el array
-    X_norm = (X - X.min()) / (X.max() - X.min())
+    # X_norm = (X - X.min()) / (X.max() - X.min())
 
     # media de cada columna
-    mu = np.ndarray(shape=(X))
+    # mu = np.ndarray(shape=(X))
+    mu = np.mean(X)
 
     # desviacion de cada columna
-    sigma = np.ndarray()
+    sigma = np.std(X)
+    #sigma = np.ndarray()
+
+    X_norm = (X - mu)/sigma
 
     # find the mean of each column/feature
     # mu will have shape (n,)

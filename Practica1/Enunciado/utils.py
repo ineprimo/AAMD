@@ -46,10 +46,10 @@ def zscore_normalize_features(X):
 
     # media de cada columna
     # mu = np.ndarray(shape=(X))
-    mu = np.mean(X)
+    mu = np.mean(X, axis=0)
 
     # desviacion de cada columna
-    sigma = np.std(X)
+    sigma = np.std(X, axis=0, ddof=0)
     #sigma = np.ndarray()
 
     X_norm = (X - mu)/sigma
@@ -70,8 +70,9 @@ def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
     x3 = data[x3_colum].to_numpy()
     X = np.array([x1, x2, x3])
     X = X.T
+    X_norm, mu, sigma = zscore_normalize_features(X)
     y = data[y_colum].to_numpy()
-    return X, y
+    return X_norm, y
 
 def GetNumGradientsSuccess(w1,w1Sol,b1,b1Sol):
     iterator = 0

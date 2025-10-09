@@ -56,9 +56,21 @@ class LinearRegMulti(LinearReg):
         J_history = []
         w_history = []
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
-        b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
-       
-        super().gradient_descent(alpha, num_iters)
+        b_initial = copy.deepcopy(self.b)  
+
+          
+        for i in range(num_iters):
+            w, b = self.compute_gradient()
+
+            # el gradient descent se calcula con el gradiente del metodo de arriba
+            self.w = self.w - (alpha*w)
+            self.b = self.b - (alpha*b)
+
+            cost = self.compute_cost()
+            # j_history guarda los costes por gradiente en cada iteracion
+            J_history.append(cost)
+
+            # w history
 
         return self.w, self.b, J_history, w_initial, b_initial
 

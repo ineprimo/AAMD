@@ -46,7 +46,7 @@ class LinearReg:
         # DUDA!!!! la media de la formula es de los datos reales? yo supongo que si
         # pero no lo tengo muy claro
         aux = self.y - y_prima
-        s = np.square(aux)
+        s = aux ** 2
         sumatorio = np.sum(s)
         cost = sumatorio/(np.size(self.y)*2)
 

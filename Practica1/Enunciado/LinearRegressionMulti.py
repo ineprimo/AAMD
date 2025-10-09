@@ -33,20 +33,21 @@ class LinearRegMulti(LinearReg):
         # para optimizar
         cost = super().compute_cost()
 
-        return cost
+        return cost + self._regularizationL2Cost()
     
 
     def compute_gradient(self):
 
-        # DUDA !!! qie coojones es el [x sub i] que hay en el enunciado??? porque
-        # entiendo que [y sub i] es la prediccion e [y sub i prima] es el valor real,
-        # que se traduce en x e y en esta clase, pero entonces que es [x sub i] ¿?
+        #
+        y_prima = self.f_w_b(self.x)
 
-        gradientw, gradientb = super().compute_gradient()
-        
-        # hay un metodo en numpy lmao
-        #gradientw = np.gradient(self.x, self.w)
-        #gradientb = np.gradient(self.x, self.b)
+        # es la misma funcion que en en el no multi pero con el @ por eso no la llamo
+        gradientw = (self.x.T @ (y_prima - self.y))/np.size(self.y)
+        gradientb = np.sum(y_prima - self.y)/np.size(self.y)
+
+        # ejercicio 3 para que de bien el test
+        gradientw += self._regularizationL2Gradient()
+
         return gradientw, gradientb
     
     
@@ -71,7 +72,10 @@ class LinearRegMulti(LinearReg):
     """
     
     def _regularizationL2Cost(self):
-        return 0
+
+        a = self.lamb /(2 * np.size(self.x))
+        b = np.sum(np.square(self.w))
+        return a * b
     
     """
     Compute the regularization gradient (is private method: start with _ )
@@ -82,7 +86,7 @@ class LinearRegMulti(LinearReg):
     """ 
     
     def _regularizationL2Gradient(self):
-        return 0
+        return (self.lamb * self.w)/np.size(self.x)
 
     
 def cost_test_multi_obj(x,y,w_init,b_init):

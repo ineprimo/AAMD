@@ -21,10 +21,6 @@ class LogisticRegMulti(LinearRegMulti):
         super().__init__(x, y,w,b,lambda_)
 
 
-
-    
-    
-
     
 def cost_test_multi_obj(x,y,w_init,b_init):
     lr = LogisticRegMulti(x,y,w_init,b_init,0)

@@ -31,7 +31,16 @@ def zscore_normalize_features(X):
       mu (ndarray (n,))     : mean of each feature
       sigma (ndarray (n,))  : standard deviation of each feature
     """
-    X_norm, mu, sigma = 0
+    #X_norm, mu, sigma = 0
+      # media de cada columna
+    # mu = np.ndarray(shape=(X))
+    mu = np.mean(X, axis=0)
+
+    # desviacion de cada columna
+    sigma = np.std(X, axis=0, ddof=0)
+    #sigma = np.ndarray()
+
+    X_norm = (X - mu)/sigma
 
 
     return X_norm, mu, sigma
@@ -53,12 +62,14 @@ def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
 def load_data_csv_multi_logistic(path,x1_colum,x2_colum,x3_colum,y_colum):
     X,y = load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum)
     #TODO convertir la a clases 0,1.
-    for i in range(y):
-        if(y[i] < 7):
-            y_colum[i] = 0
-        else:
-            y[i] = 1
+    #for i in range(y):
+    #    if(y[i] < 7):
+    #        y_colum[i] = 0
+    #    else:
+    #        y[i] = 1
+    y = np.where(y < 7, 0, 1)
     return X,y
+
         
     
         

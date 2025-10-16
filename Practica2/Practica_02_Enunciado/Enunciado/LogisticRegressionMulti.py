@@ -22,6 +22,22 @@ class LogisticRegMulti(LinearRegMulti):
 
 
     
+    def f_w_b(self, x):
+        a = super().f_w_b(x)
+        return 1/(1 + np.exp(a))
+
+
+    def compute_cost(self):
+        
+        y_prima = self.f_w_b(self.x)
+
+        # para optimizar
+        cost = super().compute_cost()
+
+        return cost + self._regularizationL2Cost()
+    
+
+    
 def cost_test_multi_obj(x,y,w_init,b_init):
     lr = LogisticRegMulti(x,y,w_init,b_init,0)
     cost = lr.compute_cost()

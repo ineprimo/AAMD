@@ -1,5 +1,5 @@
 from public_tests_logistic_multi import compute_cost_test, compute_gradient_test
-from utils import load_data_csv_multi_logistic,zscore_normalize_features
+from utils import load_data_csv_multi_logistic,load_data_csv_multi_logistic2,zscore_normalize_features
 
 from LogisticRegressionMulti import LogisticRegMulti
 from LogisticRegressionMulti import cost_test_multi_obj
@@ -42,6 +42,13 @@ def test_gradient_descent(x_train, y_train):
 
 
 x_train, y_train = load_data_csv_multi_logistic("games_data.csv","score","critics","users","user score")
+x_train, mu, sigma = zscore_normalize_features(x_train)
+test_cost(x_train, y_train)
+test_gradient(x_train, y_train)
+test_gradient_descent(x_train, y_train)
+
+# OPCIONAL 
+x_train, y_train = load_data_csv_multi_logistic2("games_data.csv","score","critics","users","user score")
 x_train, mu, sigma = zscore_normalize_features(x_train)
 test_cost(x_train, y_train)
 test_gradient(x_train, y_train)

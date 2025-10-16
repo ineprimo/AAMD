@@ -57,19 +57,35 @@ def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
     return X, y
 
     
-## 0 Malo, 1 Regular, 2 Notable, 3 Sobresaliente, 4 Must Play.
 ## 0 Malo, 1 Bueno
 def load_data_csv_multi_logistic(path,x1_colum,x2_colum,x3_colum,y_colum):
     X,y = load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum)
     #TODO convertir la a clases 0,1.
-    #for i in range(y):
-    #    if(y[i] < 7):
-    #        y_colum[i] = 0
-    #    else:
-    #        y[i] = 1
-    y = np.where(y < 7, 0, 1)
+    for i in range(y.shape[0]):
+        if(i < 7):
+            i = 0
+        else:
+            i = 1
+    #y = np.where(y < 7, 0, 1)
     return X,y
 
-        
+## 0 Malo, 1 Regular, 2 Notable, 3 Sobresaliente, 4 Must Play.
+def load_data_csv_multi_logistic2(path,x1_colum,x2_colum,x3_colum,y_colum):
+    X,y = load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum)
+    #TODO convertir la a clases 0,1.
+    for i in range(y.shape[0]):
+        if(i < 5):
+            i = 0
+        elif (i > 5 and i < 7):
+            i = 1
+        elif (i > 7 and i < 9):
+            i = 2
+        elif (i > 9 and i < 9.5):
+            i = 3
+        else:
+            i = 4
+    #y = np.where(y < 7, 0, 1)
+    return X,y
+
     
         

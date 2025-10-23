@@ -15,8 +15,7 @@ a1,a2,a3,z2,z3 = rainbowdash.feedforward(x)
 
 p = rainbowdash.predict(a3)
 print(p)
-
+yohe = one_hot_encoding(a3)
 
 predict_test(p, y, accuracy)
-
-#compute_cost_test()
+compute_cost_test(rainbowdash, a3, yohe)

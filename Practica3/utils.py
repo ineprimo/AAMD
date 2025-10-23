@@ -3,6 +3,7 @@ from matplotlib import pyplot
 from scipy.io import loadmat
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import confusion_matrix
+from sklearn.preprocessing import OneHotEncoder
 
 """
 Displays 2D data stored in X in a nice grid.
@@ -60,8 +61,10 @@ Implementation of the one hot encoding... You must use OneHotEncoder function of
 Probably need to use reshape(-1, 1) to change size of the data
 """
 def one_hot_encoding(Y):
-    YEnc = 0
     #TO-DO: implements
+    YEnc = 0
+    encoder = OneHotEncoder()
+    YEnc = encoder.fit_transform(Y.reshape(-1, 1))
     return YEnc
 
 """

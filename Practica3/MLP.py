@@ -78,8 +78,8 @@ class MLP:
     def compute_cost(self, yPrime,y): # calcula solo el coste, para no ejecutar nuevamente el feedforward.
         J = 0
         m = len(yPrime)
-        a = y*np.log(yPrime)
-        b = (1-y)*np.log(1-yPrime)
+        a = y.T @ np.log(yPrime)
+        b = (1-y).T @ np.log(1-yPrime)
         J = -(1/m) * np.sum(a + b)
         return J
     

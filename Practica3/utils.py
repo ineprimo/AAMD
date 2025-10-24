@@ -63,8 +63,9 @@ Probably need to use reshape(-1, 1) to change size of the data
 def one_hot_encoding(Y):
     #TO-DO: implements
     YEnc = 0
-    encoder = OneHotEncoder()
-    YEnc = encoder.fit_transform(Y.reshape(-1, 1))
+    oneHotEncoder = OneHotEncoder(drop='first')
+    oneHotEncoderFit = oneHotEncoder.fit(Y.reshape(-1,1))
+    YEnc = oneHotEncoderFit.transform(Y.reshape(-1,1)).toarray()
     return YEnc
 
 """

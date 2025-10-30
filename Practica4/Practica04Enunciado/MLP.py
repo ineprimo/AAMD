@@ -92,7 +92,7 @@ class MLP:
         J = 0
         m = y.shape[0]
         J = -(1/m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
-        J += self._regularizationL2Cost()
+        J += self._regularizationL2Cost(m, lambda_)
         return J
     
 
@@ -161,8 +161,9 @@ class MLP:
 
     def _regularizationL2Cost(self, m, lambda_):
         ##TO-DO
-
-        return 0
+        a = np.sum(self.theta1**2)
+        b = np.sum(self.theta2**2)
+        return (lambda_/2*m) * (a + b)
     
     
     def backpropagation(self, x, y, alpha, lambda_, numIte, verbose=0):

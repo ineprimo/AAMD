@@ -17,8 +17,10 @@ class MLP:
     def __init__(self,inputLayer,hidenLayer, outputLayer, seed=0, epislom = 0.12):
         np.random.seed(seed)
         ## TO-DO
-        np.random.uniform(-epislom, epislom)
-        self.inputLayer = inputLayer;
+        self.new_trained(np.random.uniform(-epislom, epislom), np.random.uniform(-epislom, epislom))
+        self.inputLayer = inputLayer
+        self.hidenLayer = hidenLayer
+        self.outputLayer = outputLayer
         """
     Reset the theta matrix created in the constructor by both theta matrix manualy loaded.
 

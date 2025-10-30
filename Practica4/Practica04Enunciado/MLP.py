@@ -17,7 +17,8 @@ class MLP:
     def __init__(self,inputLayer,hidenLayer, outputLayer, seed=0, epislom = 0.12):
         np.random.seed(seed)
         ## TO-DO
-
+        np.random.uniform(-epislom, epislom)
+        self.inputLayer = inputLayer;
         """
     Reset the theta matrix created in the constructor by both theta matrix manualy loaded.
 
@@ -88,8 +89,10 @@ class MLP:
 	J (scalar): the cost.
     """
     def compute_cost(self, yPrime,y, lambda_): # es una función interna por eso empieza por _
-        ##TO-DO
         J = 0
+        m = y.shape[0]
+        J = -(1/m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
+        J += self._regularizationL2Cost()
         return J
     
 
@@ -158,6 +161,7 @@ class MLP:
 
     def _regularizationL2Cost(self, m, lambda_):
         ##TO-DO
+
         return 0
     
     

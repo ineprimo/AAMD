@@ -17,10 +17,13 @@ class MLP:
     def __init__(self,inputLayer,hidenLayer, outputLayer, seed=0, epislom = 0.12):
         np.random.seed(seed)
         ## TO-DO
-        self.new_trained(np.random.uniform(-epislom, epislom), np.random.uniform(-epislom, epislom))
+
         self.inputLayer = inputLayer
         self.hidenLayer = hidenLayer
         self.outputLayer = outputLayer
+        self.new_trained(np.random.uniform(-epislom, epislom, (hidenLayer, inputLayer + 1)), 
+                         np.random.uniform(-epislom, epislom, (outputLayer, hidenLayer + 1)))
+
         """
     Reset the theta matrix created in the constructor by both theta matrix manualy loaded.
 
@@ -48,8 +51,9 @@ class MLP:
         z (array_like): activation signal received by the layer.
     """
     def _sigmoid(self,z):
-        ##TO-DO
-        return 0
+        # sigmoidal -> 1/(1 + e^-x)
+        a = (1 + np.e**(-z))
+        return 1/a
 
     """
     Computes de sigmoid derivation of de activation (private)
@@ -58,8 +62,7 @@ class MLP:
         a (array_like): activation received by the layer.
     """   
     def _sigmoidPrime(self,a):
-        ##TO-DO
-        return 0
+        return  a*(1 - a)
 
     """
     Run the feedwordwar neural network step
@@ -73,8 +76,21 @@ class MLP:
     z2,z3 (array_like): signal fuction of two last layers
     """
     def feedforward(self,x):
-        a1,a2,a3,z2,z3 = 0
-        ##TO-DO
+       # le mete neurona de 1
+        s = self._size(x)
+        a1 = np.hstack([np.ones((s, 1)), x])
+        
+        # a2
+        z2 = a1 @ self.theta1.T     # neuronas * pesos
+        a2 = self._sigmoid(z2)      # funcion de activacion
+
+        # le mete neurona de 1 (hay que hacerlo en todas las capas ocultas)
+        a2 = np.hstack([np.ones((s, 1)), a2])
+
+        # a3
+        z3 = a2 @ self.theta2.T       # idem
+        a3 = self._sigmoid(z3)
+
         return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
 
 
@@ -129,7 +145,27 @@ class MLP:
     """
     def compute_gradients(self, x, y, lambda_):
         ##TO-DO
-        J,grad1,grad2 = 0
+        #J,grad1,grad2 = 0
+        m = self._size(x)    
+
+        #
+        a1,a2,a3,z2,z3 = self.feedforward(x)
+        J = self.compute_cost(y, a3, lambda_)
+
+        grad1 = np.zeros(self.theta1.shape)
+        grad2 = np.zeros(self.theta1.shape)
+
+        # error de la capa de salida
+        delta3 = a3 - y
+
+
+        # error delta 2 (penultima capa)
+        delta2_t = np.dot(delta3, self.theta2)
+        delta2 = delta2_t*self._sigmoidPrime(a2)
+
+        grad1 = (1/m)*delta2
+        grad2 = (1/m)*delta3
+
         return (J, grad1, grad2)
     
     """

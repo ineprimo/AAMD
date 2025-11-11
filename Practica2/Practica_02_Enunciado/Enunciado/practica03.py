@@ -33,18 +33,19 @@ def run_gradient_descent(x_train, y_train,alpha = 0.01,iterations=1500,lambda_=0
 
 def test_gradient_descent(x_train, y_train):
     #print("----- Original Gradient descent------")
-    w1, b1 = run_gradient_descent(x_train, y_train,0.01,1500,0)
+    w1, b1 = run_gradient_descent(x_train, y_train,0.01,3,0)
     print("w,b found by gradient descent with labmda 0 ([ 0.93305656  0.18903186 -0.12087087] 0.4690649858291144):", w1, b1)
 
-    w2, b2 = run_gradient_descent(x_train, y_train,0.01,1500,1)
+    w2, b2 = run_gradient_descent(x_train, y_train,0.01,3,1)
     print("w,b found by gradient descent with labmda 1 ([ 0.93278101  0.18900175 -0.12080013] 0.46905464164492655):", w2, b2)
 
 
-
 x_train, y_train = load_data_csv_multi_logistic("games_data.csv","score","critics","users","user score")
+#print(" y_train ",y_train)
 x_train, mu, sigma = zscore_normalize_features(x_train)
 test_cost(x_train, y_train)
 test_gradient(x_train, y_train)
+#print(" y_train ",y_train)
 test_gradient_descent(x_train, y_train)
 
 # OPCIONAL 

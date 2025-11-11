@@ -103,7 +103,7 @@ class LinearReg:
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
-        
+        print("X ",self.x)
         for i in range(num_iters):
             w, b = self.compute_gradient()
 
@@ -114,7 +114,8 @@ class LinearReg:
             cost = self.compute_cost()
             # j_history guarda los costes por gradiente en cada iteracion
             J_history.append(cost)
-
+            print(f"Iteration {i:4}: Cost {float(J_history[-1]):8.3f}   ")
+            print("Model w ",self.w," b ",self.b)
             # w history
 
         return self.w, self.b, J_history, w_initial, b_initial

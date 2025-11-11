@@ -153,11 +153,10 @@ class MLP:
         J = self.compute_cost(y, a3, lambda_)
 
         grad1 = np.zeros(self.theta1.shape)
-        grad2 = np.zeros(self.theta1.shape)
+        grad2 = np.zeros(self.theta2.shape)
 
         # error de la capa de salida
         delta3 = a3 - y
-
 
         # error delta 2 (penultima capa)
         delta2_t = np.dot(delta3, self.theta2)

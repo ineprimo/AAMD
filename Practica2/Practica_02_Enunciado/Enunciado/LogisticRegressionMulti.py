@@ -30,10 +30,9 @@ class LogisticRegMulti(LinearRegMulti):
         
         y_prima = self.f_w_b(self.x)
 
-        a =-(1/np.size(self.y))
-        b = self.y*np.log(y_prima)
-        c = (1 - self.y)*np.log(1-y_prima)
-        cost = a*np.sum(b + c)
+        m = self.x.shape[0]
+        b = self.y*np.log(y_prima) + (1 - self.y)*np.log(1-y_prima)
+        cost = (1/m)*(-np.sum(b))
         
         return cost + self._regularizationL2Cost()
     

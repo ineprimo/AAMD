@@ -31,9 +31,6 @@ def main():
     print("Main program")
     #Test 1
     # ejercios 1 y 2
-
-    
-
     gradientTest()
 
     ## TO-DO: descoment both test and create the needed code to execute them.

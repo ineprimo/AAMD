@@ -40,7 +40,7 @@ class LinearRegMulti(LinearReg):
 
         #
         y_prima = self.f_w_b(self.x)
-
+        print("y prime ", y_prima)
         # es la misma funcion que en en el no multi pero con el @ por eso no la llamo
         gradientw = (self.x.T @ (y_prima - self.y))/np.size(self.y)
         gradientb = np.sum(y_prima - self.y)/np.size(self.y)
@@ -58,17 +58,20 @@ class LinearRegMulti(LinearReg):
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  
 
-          
+        #print("X ",self.x)
+        #print("X ",self.y)
         for i in range(num_iters):
             w, b = self.compute_gradient()
-
+            cost = self.compute_cost()
             # el gradient descent se calcula con el gradiente del metodo de arriba
             self.w = self.w - (alpha*w)
             self.b = self.b - (alpha*b)
 
-            cost = self.compute_cost()
+            #print("W ", self.w, " b ", self.b)
             # j_history guarda los costes por gradiente en cada iteracion
             J_history.append(cost)
+            #print(f"Iteration {i:4}: Cost {float(J_history[-1]):8.3f}   ")
+            #print("Model w ",self.w," b ",self.b)
 
             # w history
 

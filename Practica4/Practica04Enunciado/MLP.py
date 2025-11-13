@@ -84,6 +84,7 @@ class MLP:
         z2 = a1 @ self.theta1.T     # neuronas * pesos
         a2 = self._sigmoid(z2)      # funcion de activacion
 
+        s = self._size(a2)
         # le mete neurona de 1 (hay que hacerlo en todas las capas ocultas)
         a2 = np.hstack([np.ones((s, 1)), a2])
 
@@ -126,7 +127,7 @@ class MLP:
     """
     def predict(self,a3):
         ##TO-DO
-        p = 0
+        p = np.argmax(a3, axis=1)
         return p
     
 
@@ -150,7 +151,7 @@ class MLP:
 
         #
         a1,a2,a3,z2,z3 = self.feedforward(x)
-        J = self.compute_cost(y, a3, lambda_)
+        J = self.compute_cost(a3, y, lambda_)
 
         grad1 = np.zeros(self.theta1.shape)
         grad2 = np.zeros(self.theta2.shape)
@@ -159,11 +160,11 @@ class MLP:
         delta3 = a3 - y
 
         # error delta 2 (penultima capa)
-        delta2_t = np.dot(delta3, self.theta2)
-        delta2 = delta2_t*self._sigmoidPrime(a2)
+        delta2_t = np.dot(delta3, self.theta2[:, :1])
+        delta2 = delta2_t*self._sigmoidPrime(z2)
 
-        grad1 = (1/m)*delta2
-        grad2 = (1/m)*delta3
+        grad1 = (delta2.T@a1)/m
+        grad2 = (delta3.T@a2)/m
 
         return (J, grad1, grad2)
     
@@ -181,7 +182,9 @@ class MLP:
     """
     def _regularizationL2Gradient(self, theta, lambda_, m):
         ##TO-DO
-        return 0
+        a = (lambda_/m) * np.copy(theta)
+        # ¿?
+        return a
     
     
     """
@@ -198,16 +201,19 @@ class MLP:
 
     def _regularizationL2Cost(self, m, lambda_):
         ##TO-DO
-        a = np.sum(self.theta1**2)
-        b = np.sum(self.theta2**2)
+        a = np.sum(self.theta1[:, 1:]**2)
+        b = np.sum(self.theta2[:, 1:]**2)
         return (lambda_/2*m) * (a + b)
     
     
     def backpropagation(self, x, y, alpha, lambda_, numIte, verbose=0):
         Jhistory = []
         for i in range(numIte):
-            J = 0
             ##TO-DO: calculate gradients and update both theta matrix
+            J, grad1, grad2 = self.compute_cost(x, y, lambda_)
+            self.theta1 -= alpha * grad1
+            self.theta2 -= alpha * grad2
+            Jhistory.append(J)
             if verbose > 0 :
                 if i % verbose == 0 or i == (numIte-1):
                     print(f"Iteration {(i+1):6}: Cost {float(J):8.4f}   ")

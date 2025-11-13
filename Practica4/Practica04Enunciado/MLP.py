@@ -21,8 +21,11 @@ class MLP:
         self.inputLayer = inputLayer
         self.hidenLayer = hidenLayer
         self.outputLayer = outputLayer
-        self.new_trained(np.random.uniform(-epislom, epislom, (hidenLayer, inputLayer + 1)), 
-                         np.random.uniform(-epislom, epislom, (outputLayer, hidenLayer + 1)))
+        self.epsilom = epislom
+
+        th1 = np.random.uniform(-epislom, epislom, (hidenLayer, inputLayer + 1))
+        th2 = np.random.uniform(-epislom, epislom, (outputLayer, hidenLayer + 1))
+        self.new_trained(th1, th2)
 
         """
     Reset the theta matrix created in the constructor by both theta matrix manualy loaded.
@@ -52,7 +55,7 @@ class MLP:
     """
     def _sigmoid(self,z):
         # sigmoidal -> 1/(1 + e^-x)
-        a = (1 + np.e**(-z))
+        a = (1 + np.exp(-z))
         return 1/a
 
     """
@@ -110,7 +113,7 @@ class MLP:
     def compute_cost(self, yPrime,y, lambda_): # es una función interna por eso empieza por _
         J = 0
         m = y.shape[0]
-        J = -(1/m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
+        J = (-1/m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
         J += self._regularizationL2Cost(m, lambda_)
         return J
     
@@ -160,11 +163,16 @@ class MLP:
         delta3 = a3 - y
 
         # error delta 2 (penultima capa)
-        delta2_t = np.dot(delta3, self.theta2[:, :1])
-        delta2 = delta2_t*self._sigmoidPrime(z2)
+        delta2_t = np.dot(delta3, self.theta2)
+        delta2 = delta2_t*self._sigmoidPrime(a2)
 
-        grad1 = (delta2.T@a1)/m
+        grad1 = (delta2[:,1:].T@a1)/m#qjuitar el sesgo [:, 1:]
         grad2 = (delta3.T@a2)/m
+
+
+        #quitar el sesgo [:, 1:]
+        grad1[:, 1:] = grad1[:, 1:] + self._regularizationL2Gradient(self.theta1, lambda_, m)
+        grad2[:, 1:] = grad2[:, 1:] + self._regularizationL2Gradient(self.theta2, lambda_, m)
 
         return (J, grad1, grad2)
     
@@ -183,8 +191,7 @@ class MLP:
     def _regularizationL2Gradient(self, theta, lambda_, m):
         ##TO-DO
         a = (lambda_/m) * np.copy(theta)
-        # ¿?
-        return a
+        return a[:, 1:]
     
     
     """

@@ -30,8 +30,8 @@ def MLP_test(X_train,y_train, X_test, y_test):
 def main():
     print("Main program")
     #Test 1
-    # ejercios 1 y 2
 
+    # ejercios 1 y 2
     fluttershy = MLP(400, 25, 10)
     gradientTest()
 

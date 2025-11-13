@@ -210,7 +210,7 @@ class MLP:
         ##TO-DO
         a = np.sum(self.theta1[:, 1:]**2)
         b = np.sum(self.theta2[:, 1:]**2)
-        return (lambda_/2*m) * (a + b)
+        return (lambda_/(2*m)) * (a + b)
     
     
     def backpropagation(self, x, y, alpha, lambda_, numIte, verbose=0):

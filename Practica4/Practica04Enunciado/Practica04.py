@@ -2,6 +2,10 @@ from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
 from utils import load_data, load_weights,one_hot_encoding, accuracy
 from public_test import checkNNGradients,MLP_test_step
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+
+
 
 
 
@@ -25,6 +29,19 @@ def MLP_test(X_train,y_train, X_test, y_test):
     print("Test 3 Calculando para lambda = 1")
     MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test,1,2000,0.92667,2000/10)
 
+def SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, iterations):
+    mlp = MLPClassifier(hidden_layer_sizes=(n_hidden_layers),
+                            activation='logistic',      # funcion de activacion logistica (sigmoidal)
+                            solver='sgd',               # solver estocastico
+                            alpha=lambda_,              # alpha
+                            learning_rate_init=alpha,        # 
+                            max_iter=iterations, 
+                            shuffle=True,
+                            random_state=42)
+    mlp.fit(x_train, y_train)
+    y_pred = mlp.predict(x_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f"SKLearn calculate accuracy for lambda = {(lambda_):1.5f} : {(accuracy):1.5f}")
 
 
 def main():
@@ -47,8 +64,30 @@ def main():
     yohe_train = one_hot_encoding(y_train)
 
     #Test 2
-    MLP_test(x_train, yohe_train, x_test, y_test)
+    #MLP_test(x_train, yohe_train, x_test, y_test)
 
+
+    # ejercicio 4 (MLPClassifier SKLearn)
+
+    # TEST 1
+    lambda_ = 0         # 
+    num_iters = 2000
+    alpha = 0.01        # learning rate
+    n_hidden_layers = 25
     
+    # test 1
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+
+    # test 2
+    lambda_ = 0.5
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+
+    # test 3
+    lambda_ = 1    
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+
+    # ejercicio 5 (ya no opcional lmmaooo)
+    # jimbo tio da palo al agua 
+
 
 main()

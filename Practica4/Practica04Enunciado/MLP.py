@@ -111,7 +111,6 @@ class MLP:
 	J (scalar): the cost.
     """
     def compute_cost(self, yPrime,y, lambda_): # es una función interna por eso empieza por _
-        J = 0
         m = y.shape[0]
         J = (-1/m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
         J += self._regularizationL2Cost(m, lambda_)
@@ -217,7 +216,7 @@ class MLP:
         Jhistory = []
         for i in range(numIte):
             ##TO-DO: calculate gradients and update both theta matrix
-            J, grad1, grad2 = self.compute_cost(x, y, lambda_)
+            J, grad1, grad2 = self.compute_gradients(x, y, lambda_)
             self.theta1 -= alpha * grad1
             self.theta2 -= alpha * grad2
             Jhistory.append(J)

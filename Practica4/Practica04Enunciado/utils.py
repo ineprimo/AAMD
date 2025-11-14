@@ -45,13 +45,20 @@ def load_weights(file):
     return theta1, theta2
 
 def one_hot_encoding(Y):
-    YEnc = 0
-    #TO-DO: implements
+    Y = Y.reshape(-1, 1)
+    encoder = OneHotEncoder(sparse_output=False)
+    YEnc = encoder.fit_transform(Y)
     return YEnc
 
 def accuracy(P,Y):
 	#TO-DO: implements
-	return -1
+    m = len(P)
+    cont = 0
+    for i in range(m):
+        if(P[i] == Y[i]):
+            cont += 1
+    return cont
+
 
 
 ###########################################################################

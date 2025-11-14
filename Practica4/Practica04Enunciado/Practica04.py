@@ -33,12 +33,21 @@ def main():
 
     # ejercios 1 y 2
     fluttershy = MLP(400, 25, 10)
-    gradientTest()
+    #gradientTest()
 
-    ## TO-DO: descoment both test and create the needed code to execute them.
-    
+    # ejercicio 3
+    # carga los datos
+    X, Y = load_data('./data/ex3data1.mat')
+
+    # coge una parte aleatoria de los datos ()
+    # metodo de sklearn
+    x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, shuffle=True, random_state=0)
+
+    # aplicar el one hot encoding con los datos de entrenamiento (y_train) 
+    yohe_train = one_hot_encoding(y_train)
+
     #Test 2
-    #MLP_test()
+    MLP_test(x_train, yohe_train, x_test, y_test)
 
     
 

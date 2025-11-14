@@ -88,6 +88,6 @@ def main():
 
     # ejercicio 5 (ya no opcional lmmaooo)
     # jimbo tio da palo al agua 
-
+    # se te ve muy apaniada en AAAAAA, parece que no necesitas mi ayuda
 
 main()

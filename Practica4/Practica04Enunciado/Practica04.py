@@ -4,7 +4,7 @@ from public_test import checkNNGradients,MLP_test_step
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
-
+from MLP_Complete import MLP_Complete
 
 
 
@@ -29,6 +29,7 @@ def MLP_test(X_train,y_train, X_test, y_test):
     print("Test 3 Calculando para lambda = 1")
     MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test,1,2000,0.92667,2000/10)
 
+
 def SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, iterations):
     mlp = MLPClassifier(hidden_layer_sizes=(n_hidden_layers),
                             activation='logistic',      # funcion de activacion logistica (sigmoidal)
@@ -43,16 +44,27 @@ def SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alp
     accuracy = accuracy_score(y_test, y_pred)
     print(f"SKLearn calculate accuracy for lambda = {(lambda_):1.5f} : {(accuracy):1.5f}")
 
+def MLP_Complete_Test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, iterations):
+    mlp = MLP_Complete(x_train.shape[1],[25],y_train.shape[1])
+    Jhistory = mlp.backpropagation(x_train,y_train,alpha,lambda_,iterations)
+    a, z = mlp.feedforward(x_test)
+    a3 = a[-1]             # coge la ultima
+    y_pred=mlp.predict(a3)
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f"MLP Complete calculate accuracy for lambda = {(lambda_):1.5f} : {(accuracy):1.5f}")
 
 def main():
     print("Main program")
-    #Test 1
 
-    # ejercios 1 y 2
+    # -----------------------------------------------------------------------
+    # EJERCICIOS 1 y 2
     fluttershy = MLP(400, 25, 10)
+
+    # TEST
     #gradientTest()
 
-    # ejercicio 3
+    # -----------------------------------------------------------------------
+    # EJERCICIO 3
     # carga los datos
     X, Y = load_data('./data/ex3data1.mat')
 
@@ -63,11 +75,32 @@ def main():
     # aplicar el one hot encoding con los datos de entrenamiento (y_train) 
     yohe_train = one_hot_encoding(y_train)
 
-    #Test 2
-    #MLP_test(x_train, yohe_train, x_test, y_test)
+    #TEST 2
+    MLP_test(x_train, yohe_train, x_test, y_test)
+
+    # -----------------------------------------------------------------------
+    # EJERCICIO 4 (MLPClassifier SKLearn)
+
+    lambda_ = 0         # 
+    num_iters = 2000
+    alpha = 0.01        # learning rate
+    n_hidden_layers = 25
+    
+    # TEST 1
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+
+    # TEST 2
+    lambda_ = 0.5
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+
+    # TEST 3
+    lambda_ = 1    
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
 
-    # ejercicio 4 (MLPClassifier SKLearn)
+    # -----------------------------------------------------------------------
+    # EJERCICIO 5 (ya no opcional lmmaooo)
+    justb = MLP_Complete(400, [100, 50, 25], 10)
 
     # TEST 1
     lambda_ = 0         # 
@@ -75,19 +108,17 @@ def main():
     alpha = 0.01        # learning rate
     n_hidden_layers = 25
     
-    # test 1
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    # TEST 1
+    MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
-    # test 2
+    # TEST 2
     lambda_ = 0.5
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
-    # test 3
+    # TEST 3
     lambda_ = 1    
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
-    # ejercicio 5 (ya no opcional lmmaooo)
-    # jimbo tio da palo al agua 
-    # se te ve muy apaniada en AAAAAA, parece que no necesitas mi ayuda
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
 main()

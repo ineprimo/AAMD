@@ -1,31 +1,39 @@
 import numpy as np
 import math
 
-class MLP:
+class MLP_Complete:
 
     """
-    Constructor: Computes MLP.
-
+    Constructor: Computes MLP_Complete.
     Args:
         inputLayer (int): size of input
-        hiddenLayer (int): size of hidden layer.
+        hiddenLayers (array-like): number
+        of layers and size of each layers.
         outputLayer (int): size of output layer
         seed (scalar): seed of the random numeric.
-        epislom (scalar) : random initialization range. e.j: 1 = [-1..1], 2 = [-2,2]...
+        epislom (scalar) : random initialization range.
+        e.j: 1 = [-1..1], 2 = [-2,2]...
     """
-
-    def __init__(self,inputLayer,hidenLayer, outputLayer, seed=0, epislom = 0.12):
-        np.random.seed(seed)
+    def __init__(self,inputLayer, hiddenLayers, outputLayer,
+    seed=0, epislom = 0.12):
         ## TO-DO
 
         self.inputLayer = inputLayer
-        self.hidenLayer = hidenLayer
+        self.hiddenLayer = hiddenLayers
         self.outputLayer = outputLayer
         self.epsilom = epislom
+        self.seed = seed
 
-        th1 = np.random.uniform(-epislom, epislom, (hidenLayer, inputLayer + 1))
-        th2 = np.random.uniform(-epislom, epislom, (outputLayer, hidenLayer + 1))
-        self.new_trained(th1, th2)
+        # 
+        # sizes de las capas en una lista con todooos los sizes
+        self.layer_size = [inputLayer]
+        for i in hiddenLayers:             
+            self.layer_size += [i]
+        self.layer_size += [outputLayer]
+
+        # preapara las thetas (lol)
+        self.thetas = []
+        self.new_trained(self.thetas, self.epsilom)
 
         """
     Reset the theta matrix created in the constructor by both theta matrix manualy loaded.
@@ -34,9 +42,14 @@ class MLP:
         theta1 (array_like): Weights for the first layer in the neural network.
         theta2 (array_like): Weights for the second layer in the neural network.
     """
-    def new_trained(self,theta1,theta2):
-        self.theta1 = theta1
-        self.theta2 = theta2
+    def new_trained(self,thetas,epsilom):
+        for i in range(len(self.layer_size) - 1):
+            # coge las capas de entrada y salida
+            in_layer = self.layer_size[i]
+            out_layer = self.layer_size[i + 1]
+
+            theta = np.random.uniform(-epsilom, epsilom, (out_layer, in_layer + 1))
+            thetas.append(theta)
         
     """
     Num elements in the training data. (private)
@@ -79,24 +92,30 @@ class MLP:
     z2,z3 (array_like): signal fuction of two last layers
     """
     def feedforward(self,x):
-       # le mete neurona de 1
+        # listas finales de as y zs
+        a = []
+        z = []
+
+        # primera capa de neuronas (entrada)
         s = self._size(x)
         a1 = np.hstack([np.ones((s, 1)), x])
-        
-        # a2
-        z2 = a1 @ self.theta1.T     # neuronas * pesos
-        a2 = self._sigmoid(z2)      # funcion de activacion
+        a.append(a1)
 
-        s = self._size(a2)
-        # le mete neurona de 1 (hay que hacerlo en todas las capas ocultas)
-        a2 = np.hstack([np.ones((s, 1)), a2])
+        # el resto de thetas
+        for theta in self.thetas:
 
+            z_aux = a[-1] @ theta.T
+            z.append(z_aux)
+            a_aux = self._sigmoid(z_aux)
+            s = self._size(a_aux)
 
-        # a3
-        z3 = a2 @ self.theta2.T       # idem
-        a3 = self._sigmoid(z3)
-
-        return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
+            # hstack
+            # si no es la ultima theta le mete el hstack
+            if theta is not self.thetas[-1]:
+                a_aux = np.hstack([np.ones((s, 1)), a_aux])
+            a.append(a_aux)
+            
+        return a, z
 
 
     """
@@ -129,7 +148,6 @@ class MLP:
 	p (scalar): the class index with the highest activation value.
     """
     def predict(self,a3):
-        ##TO-DO
         p = np.argmax(a3, axis=1)
         return p
     
@@ -148,32 +166,46 @@ class MLP:
     grad1, grad2: the gradient matrix (same shape than theta1 and theta2)
     """
     def compute_gradients(self, x, y, lambda_):
-        ##TO-DO
-        #J,grad1,grad2 = 0
-        m = self._size(x)    
 
         #
-        a1,a2,a3,z2,z3 = self.feedforward(x)
-        J = self.compute_cost(a3, y, lambda_)
+        m = self._size(x)    
+        a, z = self.feedforward(x)
+        J = self.compute_cost(a[-1], y, lambda_)
 
-        grad1 = np.zeros(self.theta1.shape)
-        grad2 = np.zeros(self.theta2.shape)
+        # lista de gradientes y de deltas
+        gradientes = []
+        deltas = []
+
 
         # error de la capa de salida
-        delta3 = a3 - y
+        past_delta = a[-1] - y
+        deltas.append(past_delta)  
 
-        # error delta 2 (penultima capa)
-        delta2_t = np.dot(delta3, self.theta2)
-        delta2 = delta2_t*self._sigmoidPrime(a2)
+        # penultima capa
+        past_delta = deltas[-1].T @ a[-2]  # Cogemos el penultimo elemento
+        grad = past_delta / m
+        reg = self._regularizationL2Gradient(self.thetas[-1], lambda_, m)
+        grad += reg
+        gradientes.append(grad)
 
-        grad1 = (delta2[:,1:].T@a1)/m#qjuitar el sesgo [:, 1:]
-        grad2 = (delta3.T@a2)/m
+        size = len(self.hiddenLayer)
+        for i in range(size):
+            j = len(self.hiddenLayer) - i
 
-        #quitar el sesgo [:, 1:]
-        grad1[:, 1:] = grad1[:, 1:] + self._regularizationL2Gradient(self.theta1, lambda_, m)
-        grad2[:, 1:] = grad2[:, 1:] + self._regularizationL2Gradient(self.theta2, lambda_, m)
+            # error delta
+            delta_t = np.dot(past_delta, self.thetas[i+1].T)
+            d = delta_t@self._sigmoidPrime(self._sigmoid(z[j])).T
+            delta = d @ a[j]
+            deltas.append(delta)
 
-        return (J, grad1, grad2)
+            #gradiente
+            grad = deltas[-1]/m
+            grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            gradientes += grad
+
+            past_delta = d
+
+        return J, gradientes
     
     """
     Compute L2 regularization gradient
@@ -206,19 +238,24 @@ class MLP:
     """
 
     def _regularizationL2Cost(self, m, lambda_):
-        ##TO-DO
-        a = np.sum(self.theta1[:, 1:]**2)
-        b = np.sum(self.theta2[:, 1:]**2)
-        return (lambda_/(2*m)) * (a + b)
+        #a = np.sum(self.theta1[:, 1:]**2)
+        #b = np.sum(self.theta2[:, 1:]**2)
+        # lo de arriba pero sum en un for okok
+        cost = 0
+        for theta in self.thetas:
+            cost += np.sum(theta[:, 1:]**2)
+        return (lambda_/(2*m)) * cost
     
     
     def backpropagation(self, x, y, alpha, lambda_, numIte, verbose=0):
         Jhistory = []
         for i in range(numIte):
             ##TO-DO: calculate gradients and update both theta matrix
-            J, grad1, grad2 = self.compute_gradients(x, y, lambda_)
-            self.theta1 -= alpha * grad1
-            self.theta2 -= alpha * grad2
+            J, gradientes = self.compute_gradients(x, y, lambda_)
+            #self.theta1 -= alpha * grad1
+            #self.theta2 -= alpha * grad2
+            for i in len(self.thetas):
+                self.thetas[i] -= alpha * gradientes[i]
             Jhistory.append(J)
             if verbose > 0 :
                 if i % verbose == 0 or i == (numIte-1):
@@ -228,31 +265,10 @@ class MLP:
     
 
 
-"""
-target_gradient funcitón of gradient test 1
-"""
-def target_gradient(input_layer_size,hidden_layer_size,num_labels,x,y,reg_param):
-    mlp = MLP(input_layer_size,hidden_layer_size,num_labels)
-    J, grad1, grad2 = mlp.compute_gradients(x,y,reg_param)
-    return J, grad1, grad2, mlp.theta1, mlp.theta2
-
-
-"""
-costNN funcitón of gradient test 1
-"""
-def costNN(Theta1, Theta2,x, ys, reg_param):
-    mlp = MLP(x.shape[1],1, ys.shape[1])
-    mlp.new_trained(Theta1,Theta2)
-    J, grad1, grad2 = mlp.compute_gradients(x,ys,reg_param)
-    return J, grad1, grad2
-
-
-"""
-mlp_backprop_predict 2 to be execute test 2
-"""
-def MLP_backprop_predict(X_train,y_train, X_test, alpha, lambda_, num_ite, verbose):
-    mlp = MLP(X_train.shape[1],25,y_train.shape[1])
-    Jhistory = mlp.backpropagation(X_train,y_train,alpha,lambda_,num_ite,verbose)
-    a3= mlp.feedforward(X_test)[2]
-    y_pred=mlp.predict(a3)
-    return y_pred
+def MLP_backprop_predict_complete(X_train,y_train, X_test, alpha, lambda_, num_ite, verbose):
+     mlp = MLP_Complete(X_train.shape[1],[25],y_train.shape[1])
+     Jhistory = mlp.backpropagation(X_train,y_train,alpha,lambda_,num_ite,verbose)
+     a, z = mlp.feedforward(X_test)
+     a3 = a[-1]             # coge la ultima
+     y_pred=mlp.predict(a3)
+     return y_pred

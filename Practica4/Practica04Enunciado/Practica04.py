@@ -61,7 +61,7 @@ def main():
     fluttershy = MLP(400, 25, 10)
 
     # TEST
-    #gradientTest()
+    gradientTest()
 
     # -----------------------------------------------------------------------
     # EJERCICIO 3
@@ -87,29 +87,30 @@ def main():
     n_hidden_layers = 25
     
     # TEST 1
-    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 2
     lambda_ = 0.5
-    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 3
     lambda_ = 1    
-    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
 
     # -----------------------------------------------------------------------
-    # EJERCICIO 5 (ya no opcional lmmaooo)
+    # EJERCICIO 5  -> esta intentado pero en el cost compute_gradients la parte de la regularizacion del gradiente
+    # para las capas no va por las dimensiones de las matrices <3
     justb = MLP_Complete(400, [100, 50, 25], 10)
 
     # TEST 1
-    lambda_ = 0         # 
+    lambda_ = 0         #   
     num_iters = 2000
     alpha = 0.01        # learning rate
     n_hidden_layers = 25
     
     # TEST 1
-    MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 2
     lambda_ = 0.5

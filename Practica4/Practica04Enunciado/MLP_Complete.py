@@ -176,7 +176,6 @@ class MLP_Complete:
         gradientes = []
         deltas = []
 
-
         # error de la capa de salida
         past_delta = a[-1] - y
         deltas.append(past_delta)  
@@ -200,10 +199,17 @@ class MLP_Complete:
 
             #gradiente
             grad = deltas[-1]/m
-            grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            reg = self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            print(len(grad))
+            print(len(grad[1]))
+            print(len(reg))
+            print(len(reg[1]))
+            grad += reg
             gradientes += grad
 
             past_delta = d
+
+        gradientes.reverse()
 
         return J, gradientes
     
@@ -222,8 +228,8 @@ class MLP_Complete:
     def _regularizationL2Gradient(self, theta, lambda_, m):
         ##TO-DO
         a = (lambda_/m) * np.copy(theta)
-        return a[:, 1:]
-    
+        a[:, 0] = 0
+        return a
     
     """
     Compute L2 regularization cost

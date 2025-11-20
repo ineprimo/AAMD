@@ -1,0 +1,76 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Pruebas/PruebasEnemigos.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/masterAdmin/Documents/Phaser/Grabaciones/Phaser03-CreacionJuego-2/GitHub/PruebasGrabaciones/assets/tiled/MainScene.json#Plataformas": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/masterAdmin/Documents/Phaser/Grabaciones/Phaser03-CreacionJuego-2/Grabacion/PruebasGrabaciones/assets/tiled/MainScene.json": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 3190,
+                "y": 431
+            }
+        },
+        "C:/Users/masterAdmin/Documents/Phaser/Grabaciones/Phaser03-CreacionJuego-2/Grabacion/PruebasGrabaciones/assets/tiled/MainScene.json#Plataformas": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/masterAdmin/Documents/Phaser/Grabaciones/Phaser03-CreacionJuego-2/Grabacion/PruebasGrabaciones/assets/tiled/MainScene.json#Plataformas2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Logic128x256.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Pruebas/PruebasEnemigos.tmx": {
+            "scale": 0.06868003731343282,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 8576.000000000002,
+                "y": 2882.9337860780993
+            }
+        },
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Pruebas/PruebasEnemigos.tmx#ninja-tiles128": {
+            "scaleInDock": 1
+        },
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Sprite_Enemigos.tsx": {
+            "scaleInDock": 1
+        },
+        "Mapa01.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 194.75,
+                "y": 204.75
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/masterAdmin/Documents/Unity/BattleCity/Assets/BattleCity/maps",
+    "last.imagePath": "C:/Users/masterAdmin/Documents/Unity/BattleCity/Assets/BattleCity/maps",
+    "map.height": 13,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 13,
+    "openFiles": [
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Pruebas/PruebasEnemigos.tmx"
+    ],
+    "project": "BattleCity.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "C:/Users/masterAdmin/Documents/Unity/Fulvinter/FulvinterServerJesus/fullvinter/Editor/Pruebas/PruebasEnemigos.tmx",
+        "C:/Users/masterAdmin/Documents/Phaser/Grabaciones/Phaser03-CreacionJuego-2/Grabacion/PruebasGrabaciones/assets/tiled/MainScene.json",
+        "Mapa01.tmx",
+        "tileset.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

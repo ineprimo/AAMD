@@ -9,27 +9,12 @@ pathnames_unsorted = glob.glob(".\\CSVs\\TankTraining*.csv")
 # los ordena
 pathnames = sorted(pathnames_unsorted)
 
-lines = 0
-
-print("files sorted")
-# abre los archivos y guarda las lineas (no creo que sea necesario)
-for f in pathnames:
-    file = open(f, 'r', encoding="utf-8")
-    n = file.readlines()
-    lines += len(n)
-
-# para que no cuente la de win
-filas = lines - len(pathnames)
-# falta otra?
-
 # --------------------------------------------------
 # JUNTANDO DATOS
 data_result = []
-print(pathnames)
 for f in pathnames:
     aux = pd.read_csv(f)        # lee el csv
     aux2 = aux.iloc[:-1]        # quita el win/lose
-    # ¿?
     data_result.append(aux2)
 
 

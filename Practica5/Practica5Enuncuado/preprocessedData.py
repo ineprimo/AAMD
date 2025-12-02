@@ -38,8 +38,11 @@ data = pd.read_csv("cleanData.csv")
 # ONE HOT ENCONDER 
 encoder = OneHotEncoder(sparse_output=False)   # queremos que sea sparse?¿
 encoder_data = data[oneHot_columns] # cogemos solo las columnas que queremos
-encoder_final = encoder.fit_transform(encoder_data)  
+encoder_final = encoder.fit_transform(encoder_data)  #AQUI ESTA EL PROBLEMA
+print(encoder_final.shape)
 
+
+#cyn 
 # SCALER
 scaler = StandardScaler()
 scaler_data = data[standardScaling_columns]
@@ -47,17 +50,13 @@ scaler_final = scaler.fit_transform(scaler_data)
 
 # le mete a final_data los cambios hechos 
 # primero hacemos una copia (porque soy un poco paranoica)
-final_data = data
+temp_data = data
 
 
-# ESTA PARTE ESTA MAL DE MOMENTO
 # le mete el one hot
-#final_data[oneHot_columns] = encoder_final     # esto no va :( con lo comfy que era
-final_data.drop(columns=oneHot_columns)
-df_encoder = pd.DataFrame(data=encoder_data,    # valores del encoder
-                            index=data.index,    # coge los indices de los datos
-                            columns=encoder.get_feature_names_out(oneHot_columns))  # las columnas del one hot
-final_data = pd.concat([df_encoder], axis=1)
+final_data = temp_data.drop(columns=oneHot_columns)
+oneHot_df = pd.DataFrame(encoder_final, columns=encoder.get_feature_names_out(oneHot_columns))  # las columnas del one hot
+final_data = pd.concat([oneHot_df], axis=1)
 
 # le mete el scaler
 final_data[standardScaling_columns] = scaler_final

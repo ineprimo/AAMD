@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 
-data = pd.read_csv("datosLimpios.csv")  # abre el archivo de los datos limpios
+data = pd.read_csv("preprocessedData.csv")  # abre el archivo de los datos limpios
 
 unnecessary_columns = ["action"]
 atributes = data.drop(columns=unnecessary_columns)   # coge la primera columna MENOS la de action lmao
@@ -33,8 +33,9 @@ scatter = plt.scatter(
     hola[:, 0],
     hola[:, 1],
     c = color.astype(int),                  
-    cmap = "viridis",         
+    cmap = "twilight_r",         
     alpha = 0.7             
 )
+plt.colorbar(scatter, label="Hola Isma")
 
 plt.show()

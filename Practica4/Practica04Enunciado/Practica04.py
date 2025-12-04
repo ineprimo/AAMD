@@ -61,7 +61,7 @@ def main():
     fluttershy = MLP(400, 25, 10)
 
     # TEST
-    gradientTest()
+    #gradientTest()
 
     # -----------------------------------------------------------------------
     # EJERCICIO 3
@@ -76,7 +76,7 @@ def main():
     yohe_train = one_hot_encoding(y_train)
 
     #TEST 2
-    MLP_test(x_train, yohe_train, x_test, y_test)
+    #MLP_test(x_train, yohe_train, x_test, y_test)
 
     # -----------------------------------------------------------------------
     # EJERCICIO 4 (MLPClassifier SKLearn)
@@ -87,15 +87,15 @@ def main():
     n_hidden_layers = 25
     
     # TEST 1
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 2
     lambda_ = 0.5
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 3
     lambda_ = 1    
-    SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
 
     # -----------------------------------------------------------------------
@@ -106,19 +106,19 @@ def main():
     # TEST 1
     lambda_ = 0         #   
     num_iters = 2000
-    alpha = 0.01        # learning rate
+    alpha = 0.05        # learning rate
     n_hidden_layers = 25
     
     # TEST 1
-    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 2
     lambda_ = 0.5
-    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     # TEST 3
-    lambda_ = 1    
-    #MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
+    lambda_ = 1 
+    MLP_Complete_Test(x_train, yohe_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 
     #SKLearn_test(x_train, y_train, x_test, y_test, n_hidden_layers, lambda_, alpha, num_iters)
 

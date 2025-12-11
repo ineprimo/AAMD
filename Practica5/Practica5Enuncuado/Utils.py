@@ -9,7 +9,7 @@ def ExportONNX_JSON_TO_Custom(onnx_json,mlp):
     initializer = graphDic["initializer"]
     s= "num_layers:"+str(mlp.n_layers_)+"\n"
     index = 0
-    parameterIndex = 0;
+    parameterIndex = 0
     for parameter in initializer:
         name = parameter["name"]
         print("Capa ",name)
@@ -41,3 +41,14 @@ def ExportAllformatsMLPSKlearn(mlp,X,picklefileName,onixFileName,jsonFileName,cu
     customFormat = ExportONNX_JSON_TO_Custom(onnx_json,mlp)
     with open(customFileName, 'w') as f:
         f.write(customFormat)
+        
+def WriteStandardScaler(file,mean,var):
+    line = ""
+    for i in range(0,len(mean)-1):
+        line = line + str(mean[i]) + ","
+    line = line + str(mean[len(mean)-1])+ "\n"
+    for i in range(0,len(var)-1):
+        line = line + str(var[i]) + ","
+    line = line + str(var[len(var)-1])+ "\n"
+    with open(file, 'w') as f:
+        f.write(line)

@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 
-data = pd.read_csv("preprocessedData.csv")  # abre el archivo de los datos limpios
+data = pd.read_csv("cleanData.csv")  # abre el archivo de los datos limpios
 
 unnecessary_columns = ["action"]
 atributes = data.drop(columns=unnecessary_columns)   # coge la primera columna MENOS la de action lmao
@@ -20,8 +20,6 @@ color = data["action"]  #codificando cada action como un color
 scaling = StandardScaler()
 scaling.fit(atributes)
 scaled_atributes = scaling.transform(atributes)
-
-
 
 # PCA
 pca_comp = PCA(n_components=2)

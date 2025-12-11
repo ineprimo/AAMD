@@ -1,4 +1,4 @@
-from sklearn.preprocessing import OneHotEncoder, StandardScaler 
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 import pandas as pd
 
 # Normalizacion de los datos:
@@ -12,9 +12,10 @@ oneHot_columns = [
     "NEIGHBORHOOD_UP",
     "NEIGHBORHOOD_DOWN",
     "NEIGHBORHOOD_RIGHT",
-    "NEIGHBORHOOD_LEFT",
-    "action"                # diria que esto va aqui porque en el fiondo es un enum pero no se si tienen que ser coherentes
+    "NEIGHBORHOOD_LEFT"
 ]
+
+labeled_columns =  "action"        # antes lo tenia en el oneHot pero no tiene sentido porque esta es la solucion que estamos buscado
 
 # las columnas que vayan con datos continuos
 standardScaling_columns = [
@@ -41,12 +42,14 @@ encoder_data = data[oneHot_columns] # cogemos solo las columnas que queremos
 encoder_final = encoder.fit_transform(encoder_data)  #AQUI ESTA EL PROBLEMA
 print(encoder_final.shape)
 
-
-#cyn 
 # SCALER
 scaler = StandardScaler()
 scaler_data = data[standardScaling_columns]
 scaler_final = scaler.fit_transform(scaler_data)
+
+# LABELES (solucion)
+labler = LabelEncoder()
+labeled_final = labler.fit_transform(data[labeled_columns])
 
 # le mete a final_data los cambios hechos 
 # primero hacemos una copia (porque soy un poco paranoica)
@@ -60,6 +63,9 @@ final_data = pd.concat([oneHot_df], axis=1)
 
 # le mete el scaler
 final_data[standardScaling_columns] = scaler_final
+#final_data[labeled_columns] = labeled_final
+
+final_data[labeled_columns] = labeled_final
 
 # las guarda en un csv con lo
 final_data.to_csv("preprocessedData.csv", index=False)

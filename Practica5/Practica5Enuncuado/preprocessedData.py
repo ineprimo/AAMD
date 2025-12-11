@@ -56,9 +56,8 @@ temp_data = data
 # le mete el one hot
 final_data = temp_data.drop(columns=oneHot_columns)
 oneHot_df = pd.DataFrame(encoder_final, columns=encoder.get_feature_names_out(oneHot_columns))  # las columnas del one hot
-final_data = pd.concat([oneHot_df], axis=1)
+final_data = pd.concat([final_data, oneHot_df], axis=1)
 
-# le mete el scaler
 final_data[standardScaling_columns] = scaler_final
 
 # las guarda en un csv con lo

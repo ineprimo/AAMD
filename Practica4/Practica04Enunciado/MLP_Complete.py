@@ -5,6 +5,14 @@ class MLP_Complete:
 
     """
     Constructor: Computes MLP_Complete.
+    Args:
+        inputLayer (int): size of input
+        hiddenLayers (array-like): number
+        of layers and size of each layers.
+        outputLayer (int): size of output layer
+        seed (scalar): seed of the random numeric.
+        epislom (scalar) : random initialization range.
+        e.j: 1 = [-1..1], 2 = [-2,2]...
     """
     def __init__(self,inputLayer, hiddenLayers, outputLayer, seed=0, epislom = 0.12):
         self.inputLayer = inputLayer

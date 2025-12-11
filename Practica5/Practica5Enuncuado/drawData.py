@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-data = pd.read_csv("preprocessedData.csv")  # abre el archivo de los datos limpios
+data = pd.read_csv("cleanData.csv")  # abre el archivo de los datos limpios
 
 action_cols = [col for col in data.columns if col.startswith('action')]
 
@@ -22,8 +22,6 @@ color = np.argmax(data[action_cols].values, axis=1)
 scaling = StandardScaler()
 scaling.fit(atributes)
 scaled_atributes = scaling.transform(atributes)
-
-
 
 # PCA
 pca_comp = PCA(n_components=2)
